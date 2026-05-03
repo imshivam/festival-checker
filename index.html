@@ -12,21 +12,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg:           #0a0a14;
-      --bg-card:      #13131f;
-      --bg-input:     #1a1a2a;
-      --border:       rgba(255,255,255,0.07);
-      --border-green: rgba(0,255,136,0.2);
-      --green:        #00ff88;
-      --green-dim:    #00cc70;
-      --green-bg:     rgba(0,255,136,0.07);
+      --bg:             #0a0a14;
+      --bg-card:        #13131f;
+      --bg-input:       #1a1a2a;
+      --border:         rgba(255,255,255,0.07);
+      --border-green:   rgba(0,255,136,0.2);
+      --green:          #00ff88;
+      --green-dim:      #00cc70;
+      --green-bg:       rgba(0,255,136,0.07);
       --text-primary:   #eeeef8;
       --text-secondary: #a8a8c4;
       --text-muted:     #8a8aaa;
       --text-hint:      #6a6a90;
-      --radius: 16px;
-      --safe-top:    env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --radius:         16px;
+      --safe-top:       env(safe-area-inset-top, 0px);
+      --safe-bottom:    env(safe-area-inset-bottom, 0px);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,21 +37,18 @@
       color: var(--text-primary);
       font-family: 'DM Sans', system-ui, sans-serif;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
 
-    /* ── Screens ──────────────────────────────────────────────────────────── */
+    /* ── Screens ─────────────────────────────────────────────────────────── */
     .screen {
       display: none;
-      min-height: 100vh;
       min-height: 100dvh;
-      padding: 0 20px;
-      padding-bottom: calc(48px + var(--safe-bottom));
+      padding: 0 20px calc(48px + var(--safe-bottom));
       flex-direction: column;
     }
     .screen.active { display: flex; }
 
-    /* ── Login ────────────────────────────────────────────────────────────── */
+    /* ── Login ───────────────────────────────────────────────────────────── */
     #screen-login {
       align-items: center;
       justify-content: center;
@@ -59,32 +56,18 @@
       gap: 28px;
       background-image: radial-gradient(ellipse 80% 50% at 50% 20%, rgba(0,255,136,0.09) 0%, transparent 70%);
     }
-
     .login-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 80px;
       letter-spacing: 0.04em;
       line-height: 0.88;
-      color: var(--text-primary);
       text-shadow: 0 0 80px rgba(0,255,136,0.3);
     }
     .login-logo em { color: var(--green); font-style: normal; }
+    .login-sub { font-size: 15px; color: var(--text-secondary); max-width: 260px; line-height: 1.55; }
 
-    .login-sub {
-      font-size: 15px;
-      color: var(--text-secondary);
-      max-width: 260px;
-      line-height: 1.55;
-    }
-
-    /* ── Loading ──────────────────────────────────────────────────────────── */
-    #screen-loading {
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      text-align: center;
-    }
-
+    /* ── Loading ─────────────────────────────────────────────────────────── */
+    #screen-loading { align-items: center; justify-content: center; gap: 20px; text-align: center; }
     .spinner {
       width: 48px; height: 48px;
       border: 3px solid rgba(0,255,136,0.12);
@@ -93,342 +76,174 @@
       animation: spin 0.75s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .loading-text { font-size: 14px; color: var(--text-secondary); }
 
-    /* ── Buttons ──────────────────────────────────────────────────────────── */
+    /* ── Buttons ─────────────────────────────────────────────────────────── */
     .btn-primary {
-      background: var(--green);
-      color: #000;
-      border: none;
-      border-radius: 100px;
-      padding: 16px 40px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      box-shadow: 0 0 40px rgba(0,255,136,0.28);
-      transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
-      width: 100%;
-      max-width: 320px;
+      background: var(--green); color: #000; border: none;
+      border-radius: 100px; padding: 16px 40px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.1em;
+      cursor: pointer; box-shadow: 0 0 40px rgba(0,255,136,0.28);
+      transition: transform 0.12s, opacity 0.12s;
+      width: 100%; max-width: 320px;
     }
     .btn-primary:active { transform: scale(0.97); }
     .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 
     .btn-ghost {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 10px 24px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
+      background: transparent; color: var(--text-muted);
+      border: 1px solid var(--border); border-radius: 100px;
+      padding: 10px 24px; font-family: 'DM Sans', sans-serif; font-size: 13px;
+      cursor: pointer; transition: color 0.15s, border-color 0.15s;
     }
     .btn-ghost:hover { color: var(--text-secondary); border-color: rgba(255,255,255,0.14); }
 
-    .btn-icon {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 9px 16px;
-      color: var(--text-secondary);
-      font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.12s;
-      white-space: nowrap;
+    .btn-sm {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 9px 16px;
+      color: var(--text-secondary); font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: all 0.12s; white-space: nowrap;
     }
-    .btn-icon:hover { border-color: rgba(255,255,255,0.14); color: var(--text-primary); }
-    .btn-icon:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-sm:hover { border-color: rgba(255,255,255,0.14); color: var(--text-primary); }
+    .btn-sm:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    /* ── Top bar ──────────────────────────────────────────────────────────── */
+    /* ── Main screen ─────────────────────────────────────────────────────── */
     .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: calc(52px + var(--safe-top)) 0 20px;
-      gap: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: calc(52px + var(--safe-top)) 0 20px; gap: 12px;
     }
-
     .top-bar-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 30px;
-      letter-spacing: 0.04em;
-      color: var(--text-primary);
-      line-height: 1;
+      font-family: 'Bebas Neue', sans-serif; font-size: 30px;
+      letter-spacing: 0.04em; line-height: 1;
     }
     .top-bar-logo em { color: var(--green); font-style: normal; }
 
     .follow-pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--text-muted);
-      background: var(--green-bg);
-      border: 1px solid var(--border-green);
-      border-radius: 100px;
-      padding: 5px 12px;
-      flex-shrink: 0;
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--text-muted);
+      background: var(--green-bg); border: 1px solid var(--border-green);
+      border-radius: 100px; padding: 5px 12px; flex-shrink: 0;
     }
     .follow-pill-num { color: var(--green); font-weight: 600; }
 
-    /* ── Cache bar ────────────────────────────────────────────────────────── */
     .cache-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 11px 15px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 15px; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 12px; margin-bottom: 24px;
     }
     .cache-info { font-size: 12px; color: var(--text-muted); }
     .cache-info b { color: var(--text-secondary); font-weight: 500; }
     .btn-refresh {
-      font-size: 12px;
-      color: var(--green-dim);
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      padding: 0;
+      font-size: 12px; color: var(--green-dim);
+      background: none; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-weight: 600; padding: 0;
     }
     .btn-refresh:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* ── Section label ────────────────────────────────────────────────────── */
     .label {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 8px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 11px;
+      letter-spacing: 0.15em; color: var(--text-muted);
+      text-transform: uppercase; margin-bottom: 8px;
     }
 
-    /* ── Festival name input ──────────────────────────────────────────────── */
     .fest-name-wrap { margin-bottom: 20px; }
-
     .input-fest {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 13px 16px;
-      color: var(--text-primary);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      outline: none;
+      width: 100%; background: var(--bg-input); border: 1px solid var(--border);
+      border-radius: 12px; padding: 13px 16px; color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; outline: none;
       transition: border-color 0.2s;
     }
     .input-fest::placeholder { color: var(--text-hint); font-weight: 400; }
     .input-fest:focus { border-color: rgba(0,255,136,0.38); }
 
-    /* ── Tabs ─────────────────────────────────────────────────────────────── */
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
+    .tabs { display: flex; gap: 8px; margin-bottom: 14px; }
     .tab {
-      flex: 1;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
+      flex: 1; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px;
+      font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500;
+      color: var(--text-muted); cursor: pointer; text-align: center; transition: all 0.15s;
     }
-    .tab.active {
-      background: var(--green-bg);
-      border-color: var(--border-green);
-      color: var(--green);
-    }
+    .tab.active { background: var(--green-bg); border-color: var(--border-green); color: var(--green); }
 
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* ── Inputs ───────────────────────────────────────────────────────────── */
     .textarea {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      color: var(--text-primary);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      line-height: 1.65;
-      resize: vertical;
-      outline: none;
-      min-height: 160px;
-      transition: border-color 0.2s;
+      width: 100%; background: var(--bg-input); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 16px; color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif; font-size: 14px; line-height: 1.65;
+      resize: vertical; outline: none; min-height: 160px; transition: border-color 0.2s;
     }
     .textarea::placeholder { color: var(--text-hint); }
     .textarea:focus { border-color: rgba(0,255,136,0.35); }
 
     .url-row { display: flex; gap: 10px; margin-bottom: 12px; }
-
     .input-url {
-      flex: 1;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      color: var(--text-primary);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      outline: none;
+      flex: 1; min-width: 0; background: var(--bg-input); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 16px; color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
       transition: border-color 0.2s;
-      min-width: 0;
     }
     .input-url::placeholder { color: var(--text-hint); }
     .input-url:focus { border-color: rgba(0,255,136,0.35); }
 
     .hint { font-size: 11px; color: var(--text-hint); margin-top: 8px; }
 
-    /* ── Check button ─────────────────────────────────────────────────────── */
     .check-wrap { margin-top: 20px; }
+    .disconnect-wrap { margin-top: 28px; text-align: center; }
 
-    .disconnect-wrap {
-      margin-top: 28px;
-      text-align: center;
-    }
-
-    /* ── Results ──────────────────────────────────────────────────────────── */
+    /* ── Results ─────────────────────────────────────────────────────────── */
     .results-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      display: flex; align-items: center; gap: 14px;
       padding: calc(52px + var(--safe-top)) 0 24px;
     }
-
     .results-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 26px;
-      letter-spacing: 0.04em;
-      color: var(--text-primary);
-      flex: 1;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      font-family: 'Bebas Neue', sans-serif; font-size: 26px;
+      letter-spacing: 0.04em; flex: 1; min-width: 0;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
 
-    .stats-row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
+    .stats-row { display: flex; gap: 12px; margin-bottom: 28px; }
     .stat-card {
-      flex: 1;
-      background: var(--green-bg);
-      border: 1px solid var(--border-green);
-      border-radius: var(--radius);
-      padding: 16px 18px;
+      flex: 1; background: var(--green-bg); border: 1px solid var(--border-green);
+      border-radius: var(--radius); padding: 16px 18px;
     }
-    .stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 44px;
-      color: var(--green);
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 4px;
-    }
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: var(--green); line-height: 1; }
+    .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
 
-    /* ── Artist sections ──────────────────────────────────────────────────── */
     .artists-section { margin-bottom: 32px; }
-
     .section-heading {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 12px;
+      letter-spacing: 0.14em; color: var(--text-muted); text-transform: uppercase;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
     }
-    .section-heading::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+    .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
     .artist-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
-
     .artist-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 14px;
-      border-radius: 10px;
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; border-radius: 10px;
     }
     .artist-item.follows { background: var(--green-bg); }
 
-    .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%; flex-shrink: 0;
-    }
-    .artist-item.follows .dot {
-      background: var(--green);
-      box-shadow: 0 0 8px rgba(0,255,136,0.55);
-    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .artist-item.follows .dot { background: var(--green); box-shadow: 0 0 8px rgba(0,255,136,0.55); }
     .artist-item:not(.follows) .dot { background: rgba(255,255,255,0.14); }
 
     .artist-name { font-size: 14px; font-weight: 500; flex: 1; }
     .artist-item.follows .artist-name { color: var(--text-primary); }
     .artist-item:not(.follows) .artist-name { color: var(--text-muted); font-weight: 400; }
 
-    .badge {
-      font-size: 10px;
-      color: var(--green-dim);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
+    .badge { font-size: 10px; color: var(--green-dim); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .empty-note { padding: 12px 14px; font-size: 13px; color: var(--text-muted); }
 
-    .empty-note {
-      padding: 12px 14px;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    /* ── Toast ────────────────────────────────────────────────────────────── */
+    /* ── Toast ───────────────────────────────────────────────────────────── */
     .toast {
-      position: fixed;
-      bottom: calc(24px + var(--safe-bottom));
-      left: 20px; right: 20px;
-      background: #1c0a10;
-      border: 1px solid rgba(255,100,130,0.28);
-      border-radius: 12px;
-      padding: 14px 18px;
-      color: #ff8099;
-      font-size: 13px;
-      line-height: 1.5;
-      z-index: 999;
-      transform: translateY(120px);
-      opacity: 0;
+      position: fixed; bottom: calc(24px + var(--safe-bottom)); left: 20px; right: 20px;
+      background: #1c0a10; border: 1px solid rgba(255,100,130,0.28); border-radius: 12px;
+      padding: 14px 18px; color: #ff8099; font-size: 13px; line-height: 1.5;
+      z-index: 999; transform: translateY(120px); opacity: 0;
       transition: transform 0.28s cubic-bezier(.22,1,.36,1), opacity 0.28s;
       pointer-events: none;
     }
@@ -437,22 +252,21 @@
 </head>
 <body>
 
-<!-- ── Login ──────────────────────────────────────────────────────────────── -->
+<!-- Login -->
 <div id="screen-login" class="screen">
   <div class="login-logo">FESTIVAL<br><em>CHECKER</em></div>
   <p class="login-sub">See which artists from any festival lineup you already follow on Spotify.</p>
   <button class="btn-primary" onclick="startLogin()">Connect Spotify</button>
 </div>
 
-<!-- ── Loading ────────────────────────────────────────────────────────────── -->
+<!-- Loading -->
 <div id="screen-loading" class="screen">
   <div class="spinner"></div>
   <div class="loading-text" id="loading-text">Loading…</div>
 </div>
 
-<!-- ── Main ───────────────────────────────────────────────────────────────── -->
+<!-- Main -->
 <div id="screen-main" class="screen">
-
   <div class="top-bar">
     <div class="top-bar-logo">FESTIVAL <em>CHECKER</em></div>
     <div class="follow-pill">
@@ -463,7 +277,7 @@
 
   <div class="cache-bar">
     <div class="cache-info">Artists cached <b id="cache-age">just now</b></div>
-    <button class="btn-refresh" id="refresh-btn" onclick="refreshArtists()">↻ Refresh</button>
+    <button class="btn-refresh" id="btn-refresh" onclick="refreshArtists()">↻ Refresh</button>
   </div>
 
   <div class="fest-name-wrap">
@@ -473,52 +287,40 @@
 
   <div class="label">Lineup</div>
   <div class="tabs">
-    <div class="tab active"  onclick="switchTab('paste')">Paste names</div>
-    <div class="tab"         onclick="switchTab('url')">Website URL</div>
+    <div class="tab active" onclick="switchTab('paste')">Paste names</div>
+    <div class="tab"        onclick="switchTab('url')">Website URL</div>
   </div>
 
-  <!-- Paste tab -->
   <div id="tab-paste" class="tab-panel active">
-    <textarea
-      class="textarea"
-      id="paste-input"
-      placeholder="Paste artists here — one per line, comma-separated, or just a copied blob of text from a webpage. We'll figure it out."
-    ></textarea>
+    <textarea class="textarea" id="paste-input"
+      placeholder="Paste artist names here — one per line, comma-separated, or a whole copied blob of text from a webpage."></textarea>
     <div class="hint">Works with text copied from any festival website</div>
   </div>
 
-  <!-- URL tab -->
   <div id="tab-url" class="tab-panel">
     <div class="url-row">
       <input class="input-url" id="url-input" type="url" placeholder="https://festival.com/lineup" />
-      <button class="btn-icon" id="fetch-btn" onclick="fetchFromUrl()">Fetch</button>
+      <button class="btn-sm" id="btn-fetch" onclick="fetchFromUrl()">Fetch</button>
     </div>
-    <textarea
-      class="textarea"
-      id="url-text"
-      placeholder="Fetched text will appear here — edit it if needed before checking"
-    ></textarea>
-    <div class="hint">If fetching fails, copy the page text and use the Paste tab instead</div>
+    <textarea class="textarea" id="url-result"
+      placeholder="Artists from the page will appear here — edit if needed"></textarea>
+    <div class="hint">Fetches the lineup page and extracts artist names automatically</div>
   </div>
 
   <div class="check-wrap">
     <button class="btn-primary" onclick="checkLineup()">Check Lineup</button>
   </div>
-
   <div class="disconnect-wrap">
     <button class="btn-ghost" onclick="disconnect()">Disconnect Spotify</button>
   </div>
-
 </div>
 
-<!-- ── Results ────────────────────────────────────────────────────────────── -->
+<!-- Results -->
 <div id="screen-results" class="screen">
-
   <div class="results-top">
-    <button class="btn-icon" onclick="showScreen('main')">← Back</button>
+    <button class="btn-sm" onclick="showScreen('main')">← Back</button>
     <div class="results-title" id="results-title">LINEUP</div>
   </div>
-
   <div class="stats-row">
     <div class="stat-card">
       <div class="stat-num" id="stat-match">0</div>
@@ -529,290 +331,249 @@
       <div class="stat-label">Total artists</div>
     </div>
   </div>
-
   <div class="artists-section">
     <div class="section-heading">Artists you follow</div>
     <ul class="artist-list" id="list-followed"></ul>
   </div>
-
   <div class="artists-section">
     <div class="section-heading">Rest of the lineup</div>
     <ul class="artist-list" id="list-rest"></ul>
   </div>
-
 </div>
 
-<!-- ── Toast ──────────────────────────────────────────────────────────────── -->
 <div class="toast" id="toast"></div>
 
 <script>
-  // ── Config ─────────────────────────────────────────────────────────────────
-  const CLIENT_ID   = 'b3bb5eebf889447c9d9a10c0710fedac';
-  const REDIRECT    = 'https://imshivam.github.io/festival-checker';
-  const SCOPES      = 'user-follow-read';
+  // ── Config ────────────────────────────────────────────────────────────────
+  const CLIENT_ID  = 'b3bb5eebf889447c9d9a10c0710fedac';
+  const REDIRECT   = 'https://imshivam.github.io/festival-checker';
+  const SCOPES     = 'user-follow-read';
 
-  const K_TOKEN     = 'fc_token';
-  const K_REFRESH   = 'fc_refresh';
-  const K_VERIFIER  = 'fc_verifier';
-  const K_ARTISTS   = 'fc_artists';
-  const K_TS        = 'fc_ts';
-  const CACHE_TTL   = 24 * 60 * 60 * 1000; // 24 h
+  // !! Replace this with your Cloudflare Worker URL after deploying the Worker !!
+  const WORKER_URL = 'https://festival-checker-proxy.shivamtiwari007.workers.dev';
 
-  // ── PKCE ───────────────────────────────────────────────────────────────────
+  const K = {
+    token:   'fc_token',
+    refresh: 'fc_refresh',
+    verify:  'fc_verifier',
+    artists: 'fc_artists',
+    ts:      'fc_ts',
+  };
+  const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+
+  // ── PKCE ──────────────────────────────────────────────────────────────────
   const b64url = buf =>
     btoa(String.fromCharCode(...new Uint8Array(buf)))
-      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+      .replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
 
-  function makeVerifier() {
+  const makeVerifier = () => {
     const a = new Uint8Array(64);
     crypto.getRandomValues(a);
     return b64url(a);
-  }
+  };
 
-  async function makeChallenge(v) {
+  const makeChallenge = async v => {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
     return b64url(buf);
-  }
+  };
 
-  // ── Auth ───────────────────────────────────────────────────────────────────
+  // ── Spotify auth ──────────────────────────────────────────────────────────
   async function startLogin() {
     const v = makeVerifier();
     const c = await makeChallenge(v);
-    localStorage.setItem(K_VERIFIER, v);
-
-    const p = new URLSearchParams({
-      client_id:             CLIENT_ID,
-      response_type:         'code',
-      redirect_uri:          REDIRECT,
-      code_challenge_method: 'S256',
-      code_challenge:        c,
-      scope:                 SCOPES,
+    localStorage.setItem(K.verify, v);
+    location.href = 'https://accounts.spotify.com/authorize?' + new URLSearchParams({
+      client_id: CLIENT_ID, response_type: 'code',
+      redirect_uri: REDIRECT, scope: SCOPES,
+      code_challenge_method: 'S256', code_challenge: c,
     });
-
-    location.href = `https://accounts.spotify.com/authorize?${p}`;
   }
 
   async function handleCallback(code) {
-    const v = localStorage.getItem(K_VERIFIER);
+    const v = localStorage.getItem(K.verify);
     if (!v) { showScreen('login'); return; }
-
-    showScreen('loading');
     setText('loading-text', 'Connecting to Spotify…');
+    showScreen('loading');
 
     const resp = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
-        client_id:     CLIENT_ID,
-        grant_type:    'authorization_code',
-        code,
-        redirect_uri:  REDIRECT,
-        code_verifier: v,
+        client_id: CLIENT_ID, grant_type: 'authorization_code',
+        code, redirect_uri: REDIRECT, code_verifier: v,
       }),
     });
-
     const data = await resp.json();
-    if (!resp.ok) {
-      showToast('Could not connect to Spotify — please try again.');
-      showScreen('login');
-      return;
-    }
+    if (!resp.ok) { toast('Could not connect to Spotify.'); showScreen('login'); return; }
 
-    localStorage.setItem(K_TOKEN, data.access_token);
-    if (data.refresh_token) localStorage.setItem(K_REFRESH, data.refresh_token);
-    localStorage.removeItem(K_VERIFIER);
+    localStorage.setItem(K.token, data.access_token);
+    if (data.refresh_token) localStorage.setItem(K.refresh, data.refresh_token);
+    localStorage.removeItem(K.verify);
     history.replaceState({}, '', REDIRECT);
-
     await loadArtists(data.access_token);
   }
 
-  async function doRefreshToken() {
-    const r = localStorage.getItem(K_REFRESH);
+  async function refreshToken() {
+    const r = localStorage.getItem(K.refresh);
     if (!r) return null;
-
     const resp = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
-        client_id:     CLIENT_ID,
-        grant_type:    'refresh_token',
-        refresh_token: r,
+        client_id: CLIENT_ID, grant_type: 'refresh_token', refresh_token: r,
       }),
     });
-
     if (!resp.ok) return null;
     const data = await resp.json();
-    localStorage.setItem(K_TOKEN, data.access_token);
-    if (data.refresh_token) localStorage.setItem(K_REFRESH, data.refresh_token);
+    localStorage.setItem(K.token, data.access_token);
+    if (data.refresh_token) localStorage.setItem(K.refresh, data.refresh_token);
     return data.access_token;
   }
 
-  // ── Spotify API ────────────────────────────────────────────────────────────
-  async function fetchFollowedArtists(token, retried = false) {
+  // ── Spotify: fetch all followed artists ───────────────────────────────────
+  async function fetchAllFollowed(token, retried = false) {
     const artists = [];
     let url = 'https://api.spotify.com/v1/me/following?type=artist&limit=50';
 
     while (url) {
-      const resp = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const resp = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
 
       if (resp.status === 401) {
         if (retried) throw new Error('Session expired. Please reconnect Spotify.');
-        const newToken = await doRefreshToken();
-        if (!newToken) throw new Error('Session expired. Please reconnect Spotify.');
-        return fetchFollowedArtists(newToken, true);
+        const t = await refreshToken();
+        if (!t) throw new Error('Session expired. Please reconnect Spotify.');
+        return fetchAllFollowed(t, true);
       }
-
       if (!resp.ok) throw new Error('Failed to fetch your artists from Spotify.');
 
-      const data = await resp.json();
-      data.artists.items.forEach(a => artists.push(a.name));
-      url = data.artists.next || null;
+      const json = await resp.json();
+      json.artists.items.forEach(a => artists.push(a.name));
+      url = json.artists.next || null;
     }
-
     return artists;
   }
 
   async function loadArtists(token) {
-    showScreen('loading');
     setText('loading-text', 'Fetching your followed artists…');
-
+    showScreen('loading');
     try {
-      const artists = await fetchFollowedArtists(token);
-      localStorage.setItem(K_ARTISTS, JSON.stringify(artists));
-      localStorage.setItem(K_TS, Date.now().toString());
+      const artists = await fetchAllFollowed(token);
+      localStorage.setItem(K.artists, JSON.stringify(artists));
+      localStorage.setItem(K.ts, Date.now().toString());
       renderMain(artists);
-    } catch (err) {
-      showToast(err.message);
+    } catch (e) {
+      toast(e.message);
       showScreen('login');
     }
   }
 
   async function refreshArtists() {
-    const btn = document.getElementById('refresh-btn');
-    btn.disabled = true;
-    btn.textContent = '↻ Refreshing…';
-
-    let token = localStorage.getItem(K_TOKEN) || await doRefreshToken();
+    const btn = document.getElementById('btn-refresh');
+    btn.disabled = true; btn.textContent = '↻ Refreshing…';
+    const token = localStorage.getItem(K.token) || await refreshToken();
     if (!token) { disconnect(); return; }
-
     await loadArtists(token);
-
-    btn.disabled = false;
-    btn.textContent = '↻ Refresh';
+    btn.disabled = false; btn.textContent = '↻ Refresh';
   }
 
-  // ── Main screen ────────────────────────────────────────────────────────────
+  // ── Main screen ───────────────────────────────────────────────────────────
   function renderMain(artists) {
     document.getElementById('follow-count').textContent = artists.length;
-    document.getElementById('cache-age').textContent = formatAge(
-      parseInt(localStorage.getItem(K_TS) || '0')
-    );
+    const age = Date.now() - parseInt(localStorage.getItem(K.ts) || 0);
+    document.getElementById('cache-age').textContent =
+      age < 60e3   ? 'just now' :
+      age < 3.6e6  ? `${Math.floor(age/60e3)}m ago` :
+      age < 864e5  ? `${Math.floor(age/3.6e6)}h ago` :
+                     `${Math.floor(age/864e5)}d ago`;
     showScreen('main');
   }
 
-  function formatAge(ts) {
-    const ms = Date.now() - ts;
-    if (ms < 60_000)         return 'just now';
-    if (ms < 3_600_000)      return `${Math.floor(ms / 60_000)}m ago`;
-    if (ms < 86_400_000)     return `${Math.floor(ms / 3_600_000)}h ago`;
-    return `${Math.floor(ms / 86_400_000)}d ago`;
-  }
-
-  // ── Tabs ───────────────────────────────────────────────────────────────────
+  // ── Tab switching ─────────────────────────────────────────────────────────
   let activeTab = 'paste';
-
   function switchTab(tab) {
     activeTab = tab;
-    document.querySelectorAll('.tab').forEach((el, i) => {
-      el.classList.toggle('active', (i === 0) === (tab === 'paste'));
-    });
+    document.querySelectorAll('.tab').forEach((el, i) =>
+      el.classList.toggle('active', i === (tab === 'paste' ? 0 : 1)));
     document.getElementById('tab-paste').classList.toggle('active', tab === 'paste');
     document.getElementById('tab-url').classList.toggle('active', tab === 'url');
   }
 
-  // ── URL fetch ──────────────────────────────────────────────────────────────
+  // ── URL fetch (via Cloudflare Worker) ─────────────────────────────────────
   async function fetchFromUrl() {
     const url = document.getElementById('url-input').value.trim();
     if (!url) return;
 
-    const btn = document.getElementById('fetch-btn');
-    btn.disabled = true;
-    btn.textContent = 'Fetching…';
+    if (WORKER_URL === 'REPLACE_WITH_YOUR_WORKER_URL') {
+      toast('Worker not set up yet — follow the setup instructions.');
+      return;
+    }
+
+    const btn = document.getElementById('btn-fetch');
+    btn.disabled = true; btn.textContent = 'Fetching…';
 
     try {
-      const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-      const resp = await fetch(proxy, { signal: AbortSignal.timeout(12000) });
+      const resp = await fetch(`${WORKER_URL}?url=${encodeURIComponent(url)}`);
       if (!resp.ok) throw new Error();
-      const { contents } = await resp.json();
+      const { html } = await resp.json();
 
-      // Strip HTML, extract readable text
-      const div = document.createElement('div');
-      div.innerHTML = contents;
-      div.querySelectorAll('script,style,nav,footer,header,noscript').forEach(e => e.remove());
-      const text = div.textContent.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
-
-      document.getElementById('url-text').value = text.slice(0, 8000);
+      // Parse HTML, strip boilerplate, extract readable text
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      doc.querySelectorAll('script,style,nav,footer,header,noscript,aside').forEach(el => el.remove());
+      const text = doc.body.innerText.replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+      document.getElementById('url-result').value = text.slice(0, 8000);
     } catch {
-      showToast('Could not fetch that page. Copy the artist names from the site and paste them instead.');
+      toast('Could not fetch that page. Try copying the artist names and using the Paste tab.');
     } finally {
-      btn.disabled = false;
-      btn.textContent = 'Fetch';
+      btn.disabled = false; btn.textContent = 'Fetch';
     }
   }
 
-  // ── Artist extraction ──────────────────────────────────────────────────────
-  const normalise = str =>
-    str.toLowerCase()
-       .replace(/\bfeaturing\b|\bfeat\.?\b|\bft\.?\b/gi, '')
-       .replace(/&/g, 'and')
-       .replace(/[^a-z0-9]/g, '');
+  // ── Artist name extraction ────────────────────────────────────────────────
+  const normalise = s =>
+    s.toLowerCase()
+     .replace(/\b(feat(uring)?\.?|ft\.?)\b/gi, '')
+     .replace(/&/g, 'and')
+     .replace(/[^a-z0-9]/g, '');
+
+  const NOISE = /^(stage|arena|tent|day\s*\d|monday|tuesday|wednesday|thursday|friday|saturday|sunday|\d{1,2}[:\s]?\d{0,2}\s*(am|pm)?|lineup|tickets|buy|book|sold out|info|more info|www\.|https?:|©|newsletter|sign up|subscribe|follow us|instagram|twitter|facebook|tiktok|youtube)/i;
 
   function extractArtists(text) {
-    // Split on newlines, commas, pipes, bullets, semicolons, slashes
-    const candidates = text
-      .split(/[\n\r,|•·;\/]+/)
-      .map(s => s.trim())
-      .filter(s => s.length >= 2 && s.length <= 80);
-
-    // Filter out obvious non-artist tokens
-    const noise = /^(stage|arena|tent|day\s?\d|friday|saturday|sunday|monday|tuesday|wednesday|thursday|\d{1,2}[:\s]?\d{0,2}\s?(am|pm)?|lineup|tickets|buy|book|info|more|www\.|http|©|all rights|newsletter|sign up|subscribe|follow us|instagram|twitter|facebook|tiktok|youtube)/i;
-
     const seen = new Set();
-    return candidates.filter(s => {
-      if (noise.test(s)) return false;
-      const n = normalise(s);
-      if (!n || seen.has(n)) return false;
-      seen.add(n);
-      return true;
-    });
+    return text
+      .split(/[\n\r,|•·;]+/)
+      .map(s => s.trim())
+      .filter(s => s.length >= 2 && s.length <= 80 && !NOISE.test(s))
+      .filter(s => {
+        const n = normalise(s);
+        if (!n || seen.has(n)) return false;
+        seen.add(n);
+        return true;
+      });
   }
 
-  // ── Check lineup ───────────────────────────────────────────────────────────
+  // ── Check lineup ──────────────────────────────────────────────────────────
   function checkLineup() {
-    const cachedRaw = localStorage.getItem(K_ARTISTS);
-    if (!cachedRaw) { showToast('Artist data missing — please refresh.'); return; }
+    const raw = localStorage.getItem(K.artists);
+    if (!raw) { toast('Artist data missing — please refresh.'); return; }
 
-    const followed = JSON.parse(cachedRaw);
-    const followedNorm = new Set(followed.map(normalise));
+    const followed = new Set(JSON.parse(raw).map(normalise));
     const festName = document.getElementById('fest-name').value.trim() || 'Lineup';
 
-    const rawText = activeTab === 'paste'
+    const text = activeTab === 'paste'
       ? document.getElementById('paste-input').value
-      : document.getElementById('url-text').value;
+      : document.getElementById('url-result').value;
 
-    if (!rawText.trim()) { showToast('Please add some artist names first.'); return; }
+    if (!text.trim()) { toast('Please add some artist names first.'); return; }
 
-    const artists = extractArtists(rawText);
-    if (!artists.length) { showToast("Couldn't find any artist names. Try pasting differently."); return; }
+    const artists = extractArtists(text);
+    if (!artists.length) { toast("Couldn't extract artist names. Try a different format."); return; }
 
-    const matched = artists.filter(a => followedNorm.has(normalise(a)));
-    const rest    = artists.filter(a => !followedNorm.has(normalise(a)));
+    const matched = artists.filter(a => followed.has(normalise(a)));
+    const rest    = artists.filter(a => !followed.has(normalise(a)));
 
-    document.getElementById('results-title').textContent = festName.toUpperCase();
-    document.getElementById('stat-match').textContent    = matched.length;
-    document.getElementById('stat-total').textContent    = artists.length;
+    setText('results-title', festName.toUpperCase());
+    setText('stat-match', matched.length);
+    setText('stat-total', artists.length);
 
     const makeItem = (name, isMatch) => {
       const li = document.createElement('li');
@@ -820,28 +581,28 @@
       li.innerHTML = `
         <div class="dot" aria-hidden="true"></div>
         <span class="artist-name">${esc(name)}</span>
-        ${isMatch ? '<span class="badge">Following</span>' : ''}
-      `;
+        ${isMatch ? '<span class="badge">Following</span>' : ''}`;
       return li;
     };
 
-    const el = id => document.getElementById(id);
-    el('list-followed').innerHTML = '';
-    el('list-rest').innerHTML     = '';
+    const $followed = document.getElementById('list-followed');
+    const $rest     = document.getElementById('list-rest');
+    $followed.innerHTML = '';
+    $rest.innerHTML     = '';
 
     if (!matched.length) {
-      el('list-followed').innerHTML = '<li class="empty-note">None from this lineup</li>';
+      $followed.innerHTML = '<li class="empty-note">None from this lineup — discover someone new!</li>';
     } else {
-      matched.forEach(a => el('list-followed').appendChild(makeItem(a, true)));
+      matched.forEach(a => $followed.appendChild(makeItem(a, true)));
     }
-    rest.forEach(a => el('list-rest').appendChild(makeItem(a, false)));
+    rest.forEach(a => $rest.appendChild(makeItem(a, false)));
 
     showScreen('results');
   }
 
-  // ── Utility ────────────────────────────────────────────────────────────────
+  // ── Utilities ─────────────────────────────────────────────────────────────
   const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const setText = (id, t) => document.getElementById(id).textContent = t;
+  const setText = (id, v) => document.getElementById(id).textContent = v;
 
   function showScreen(name) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -850,7 +611,7 @@
   }
 
   let toastTimer;
-  function showToast(msg) {
+  function toast(msg) {
     const el = document.getElementById('toast');
     el.textContent = msg;
     el.classList.add('show');
@@ -859,19 +620,18 @@
   }
 
   function disconnect() {
-    [K_TOKEN, K_REFRESH, K_ARTISTS, K_TS, K_VERIFIER].forEach(k => localStorage.removeItem(k));
+    Object.values(K).forEach(k => localStorage.removeItem(k));
     showScreen('login');
   }
 
-  // ── Init ───────────────────────────────────────────────────────────────────
+  // ── Init ──────────────────────────────────────────────────────────────────
   async function init() {
     const params = new URLSearchParams(location.search);
     const code   = params.get('code');
-    const error  = params.get('error');
 
-    if (error) {
+    if (params.get('error')) {
+      toast('Spotify login was cancelled.');
       showScreen('login');
-      showToast('Spotify login was cancelled.');
       return;
     }
 
@@ -880,26 +640,21 @@
       return;
     }
 
-    const cached = localStorage.getItem(K_ARTISTS);
-    const token  = localStorage.getItem(K_TOKEN);
+    const cached = localStorage.getItem(K.artists);
+    const token  = localStorage.getItem(K.token);
 
     if (cached && token) {
-      const ts = parseInt(localStorage.getItem(K_TS) || '0');
-      if (Date.now() - ts > CACHE_TTL) {
-        // Silently refresh stale cache in background, show UI immediately
-        renderMain(JSON.parse(cached));
-        const newToken = await doRefreshToken() || token;
-        loadArtists(newToken);
-      } else {
-        renderMain(JSON.parse(cached));
+      const stale = Date.now() - parseInt(localStorage.getItem(K.ts) || 0) > CACHE_TTL;
+      renderMain(JSON.parse(cached));
+      if (stale) {
+        // Refresh cache silently in the background
+        const t = await refreshToken() || token;
+        loadArtists(t);
       }
       return;
     }
 
-    if (token) {
-      await loadArtists(token);
-      return;
-    }
+    if (token) { await loadArtists(token); return; }
 
     showScreen('login');
   }
