@@ -516,11 +516,56 @@
       if (!resp.ok) throw new Error();
       const { html } = await resp.json();
 
-      // Parse HTML, strip boilerplate, extract readable text
+      // Parse the HTML into a DOM
       const doc = new DOMParser().parseFromString(html, 'text/html');
-      doc.querySelectorAll('script,style,nav,footer,header,noscript,aside').forEach(el => el.remove());
-      const text = doc.body.innerText.replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+
+      // Strategy 1: "Learn more about X" pattern — used by many festival sites
+      // e.g. Reading, Glastonbury: each artist has a "Learn more about [Artist]" link
+      const learnMoreMatches = [...html.matchAll(/Learn more about ([^<"]{2,80})/g)]
+        .map(m => m[1].trim())
+        .filter(s => s.length >= 2);
+
+      if (learnMoreMatches.length > 3) {
+        // Deduplicate and populate textarea
+        const seen = new Set();
+        const artists = learnMoreMatches.filter(s => {
+          const n = normalise(s);
+          if (seen.has(n)) return false;
+          seen.add(n);
+          return true;
+        });
+        document.getElementById('url-result').value = artists.join('\n');
+        return;
+      }
+
+      // Strategy 2: Look for common artist container elements
+      doc.querySelectorAll('script,style,nav,footer,header,noscript,aside,iframe').forEach(el => el.remove());
+      const artistSelectors = [
+        '[class*="artist"]', '[class*="lineup"]', '[class*="performer"]',
+        '[class*="act"]', '[class*="headliner"]', '[class*="bill"]',
+      ];
+      let artistEls = doc.querySelectorAll(artistSelectors.join(','));
+      if (artistEls.length > 3) {
+        const seen = new Set();
+        const names = [...artistEls]
+          .map(el => el.textContent.trim())
+          .filter(s => s.length >= 2 && s.length <= 80)
+          .filter(s => {
+            const n = normalise(s);
+            if (!n || seen.has(n)) return false;
+            seen.add(n);
+            return true;
+          });
+        if (names.length > 3) {
+          document.getElementById('url-result').value = names.join('\n');
+          return;
+        }
+      }
+
+      // Strategy 3: Fall back to full body text — user can edit before checking
+      const text = doc.body.innerText.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
       document.getElementById('url-result').value = text.slice(0, 8000);
+
     } catch {
       toast('Could not fetch that page. Try copying the artist names and using the Paste tab.');
     } finally {
@@ -535,9 +580,25 @@
      .replace(/&/g, 'and')
      .replace(/[^a-z0-9]/g, '');
 
-  const NOISE = /^(stage|arena|tent|day\s*\d|monday|tuesday|wednesday|thursday|friday|saturday|sunday|\d{1,2}[:\s]?\d{0,2}\s*(am|pm)?|lineup|tickets|buy|book|sold out|info|more info|www\.|https?:|©|newsletter|sign up|subscribe|follow us|instagram|twitter|facebook|tiktok|youtube)/i;
+  const NOISE = /^(stage|arena|tent|day\s*\d|monday|tuesday|wednesday|thursday|friday|saturday|sunday|\d{1,2}[:\s]?\d{0,2}\s*(am|pm)?|lineup|tickets|buy|book|sold out|info|more info|www\.|https?:|©|newsletter|sign up|subscribe|follow us|instagram|twitter|facebook|tiktok|youtube|caret|learn more|filter|search)/i;
 
   function extractArtists(text) {
+    // If the text looks like a clean list (one name per line), use it directly
+    const lines = text.split(/[\n\r]+/).map(s => s.trim()).filter(Boolean);
+    const cleanLines = lines.filter(s => s.length >= 2 && s.length <= 80 && !NOISE.test(s));
+
+    // If >60% of lines pass the noise filter, treat as clean list
+    if (lines.length > 3 && cleanLines.length / lines.length > 0.6) {
+      const seen = new Set();
+      return cleanLines.filter(s => {
+        const n = normalise(s);
+        if (!n || seen.has(n)) return false;
+        seen.add(n);
+        return true;
+      });
+    }
+
+    // Otherwise split on multiple delimiters and filter aggressively
     const seen = new Set();
     return text
       .split(/[\n\r,|•·;]+/)
