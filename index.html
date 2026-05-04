@@ -498,76 +498,29 @@
     document.getElementById('tab-url').classList.toggle('active', tab === 'url');
   }
 
-  // ── URL fetch (via Cloudflare Worker) ─────────────────────────────────────
+  // ── URL fetch (via Cloudflare Worker + Claude extraction) ────────────────
   async function fetchFromUrl() {
     const url = document.getElementById('url-input').value.trim();
     if (!url) return;
-
-    if (WORKER_URL === 'REPLACE_WITH_YOUR_WORKER_URL') {
-      toast('Worker not set up yet — follow the setup instructions.');
-      return;
-    }
 
     const btn = document.getElementById('btn-fetch');
     btn.disabled = true; btn.textContent = 'Fetching…';
 
     try {
       const resp = await fetch(`${WORKER_URL}?url=${encodeURIComponent(url)}`);
-      if (!resp.ok) throw new Error();
-      const { html } = await resp.json();
+      const data = await resp.json();
 
-      // Parse the HTML into a DOM
-      const doc = new DOMParser().parseFromString(html, 'text/html');
+      if (!resp.ok || data.error) throw new Error(data.error || 'Failed');
 
-      // Strategy 1: "Learn more about X" pattern — used by many festival sites
-      // e.g. Reading, Glastonbury: each artist has a "Learn more about [Artist]" link
-      const learnMoreMatches = [...html.matchAll(/Learn more about ([^<"]{2,80})/g)]
-        .map(m => m[1].trim())
-        .filter(s => s.length >= 2);
+      // Worker returns { artists: ["Artist A", "Artist B", ...] }
+      const artists = data.artists || [];
+      if (!artists.length) throw new Error('No artists found on that page.');
 
-      if (learnMoreMatches.length > 3) {
-        // Deduplicate and populate textarea
-        const seen = new Set();
-        const artists = learnMoreMatches.filter(s => {
-          const n = normalise(s);
-          if (seen.has(n)) return false;
-          seen.add(n);
-          return true;
-        });
-        document.getElementById('url-result').value = artists.join('\n');
-        return;
-      }
+      // Populate textarea with clean one-per-line list
+      document.getElementById('url-result').value = artists.join('\n');
 
-      // Strategy 2: Look for common artist container elements
-      doc.querySelectorAll('script,style,nav,footer,header,noscript,aside,iframe').forEach(el => el.remove());
-      const artistSelectors = [
-        '[class*="artist"]', '[class*="lineup"]', '[class*="performer"]',
-        '[class*="act"]', '[class*="headliner"]', '[class*="bill"]',
-      ];
-      let artistEls = doc.querySelectorAll(artistSelectors.join(','));
-      if (artistEls.length > 3) {
-        const seen = new Set();
-        const names = [...artistEls]
-          .map(el => el.textContent.trim())
-          .filter(s => s.length >= 2 && s.length <= 80)
-          .filter(s => {
-            const n = normalise(s);
-            if (!n || seen.has(n)) return false;
-            seen.add(n);
-            return true;
-          });
-        if (names.length > 3) {
-          document.getElementById('url-result').value = names.join('\n');
-          return;
-        }
-      }
-
-      // Strategy 3: Fall back to full body text — user can edit before checking
-      const text = doc.body.innerText.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
-      document.getElementById('url-result').value = text.slice(0, 8000);
-
-    } catch {
-      toast('Could not fetch that page. Try copying the artist names and using the Paste tab.');
+    } catch (e) {
+      toast(e.message || 'Could not fetch that page. Try the Paste tab instead.');
     } finally {
       btn.disabled = false; btn.textContent = 'Fetch';
     }
